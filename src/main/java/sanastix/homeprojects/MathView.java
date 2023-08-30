@@ -11,11 +11,6 @@ public class MathView extends JFrame{
 
     private JLabel numberAmount = new JLabel("Amount of numbers: ");
     private JTextField numberCounter = new JTextField(10);
- 
-    // private JLabel rootCheck = new JLabel("Enter the root: ");
-    // private JTextField rootInput = new JTextField(5);
-    //private JButton submitRootInputButton = new JButton("Submit");
-    
 
 
     MathView(){
@@ -32,10 +27,6 @@ public class MathView extends JFrame{
         calcPanel.add(numberAmount);
         calcPanel.add(numberCounter);
 
-        // calcPanel.add(rootCheck);
-        // calcPanel.add(rootInput);
-        // calcPanel.add(submitRootInputButton);
-
         this.add(calcPanel);
 
     }
@@ -50,10 +41,6 @@ public class MathView extends JFrame{
 
     void displayErrorMessage(){
         JOptionPane.showMessageDialog(this, "Incorrect input");
-    }
-
-    public int getNumCounter(){
-        return Integer.parseInt(numberCounter.getText());
     }
 
     public void setNumCounter(int numCount){

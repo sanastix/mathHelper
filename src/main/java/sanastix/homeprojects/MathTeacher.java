@@ -17,10 +17,11 @@ public class MathTeacher {
         return equationInput;
     }
 
-    private String FILE_DB = "equationDB.txt";
-    private File equationDB = new File(FILE_DB);
+    private final String FILE_DB = "equationDB.txt";
+    private final File equationDB = new File(FILE_DB);
 
     private void saveEquationIntoFile (String equation){
+
         try(FileWriter fileWriter = new FileWriter(equationDB, true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
             bufferedWriter.write(equation);
@@ -28,18 +29,24 @@ public class MathTeacher {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     public String equationChecker(String eq){
+
         numCounter(eq);
+
         if(!isInputCorrect(eq)){
             return "Incorrect equation input";
         }
+
         if(!areBracketsCorrect(eq)){
             return "Incorrect brackets input";
         }
+
         saveEquationIntoFile(eq);
         return "The equation was saved";
+
     }
 
     private int numsInEquation = 0;
@@ -52,32 +59,32 @@ public class MathTeacher {
         return numsInEquation;
     }
 
-    private char root;
-
     private void numCounter(String equation){
-        //рахуємо кількість чисел у введеному рівнянні
+
         int count = 0;
         Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
         Matcher matcher = pattern.matcher(equation);
-        //Queue<String> numbers = new LinkedList<>();
+
         while(matcher.find()){
-            //numbers.add(matcher.group());
             count++;
         }
+
         setNumsInEquation(count);
+
     }
 
     private boolean isInputCorrect (String equation) {
 
         List<String> opList = new ArrayList<>();
-        //патерн невалідних двох операторів зі списку поспіль
+
+        //патерн невалідних операторів поспіль
         Pattern wrongOp = Pattern.compile("[-+=*/]{2,}");
         Matcher wrongOpMatcher = wrongOp.matcher(equation);
+
         //патерн валідних двох операторів поспіль
         Pattern rightOp = Pattern.compile("[-+=*/]-");
         Matcher rightOpMatcher;
 
-        //записуємо співпадіння невалідних операторів у список
         while (wrongOpMatcher.find()){
             opList.add(wrongOpMatcher.group());
         }
@@ -89,16 +96,6 @@ public class MathTeacher {
             }
         }
 
-            /*Queue<Character> operators = new LinkedList<>();
-            for (int i = 0; i < equation.length(); i++) {
-                char ch = equation.charAt(i);
-                if ((ch == '=') || (ch == '+') || (ch == '-') || (ch == '*') || (ch == '/')) {
-                    operators.add(ch);
-                }
-                if (ch == 'x') {
-                    root = ch;
-                }
-            }*/
         return true;
 
     }
@@ -108,25 +105,32 @@ public class MathTeacher {
         String[] strArr = equation.split("=");
         boolean leftStringResult = bracketsSeeker(strArr[0]);
         boolean rightStringResult = bracketsSeeker(strArr[1]);
+
         return (leftStringResult && rightStringResult);
 
     }
 
     private boolean bracketsSeeker (String string){
+
         Pattern pattern = Pattern.compile("\\(+|\\)+");
         Matcher matcher = pattern.matcher(string);
+
         boolean result;
+
         if (matcher.find()) {
             result = checkBracketsBalance(string);
         } else {
             result = true;
         }
+
         return result;
     }
 
     private boolean checkBracketsBalance(String str){
+
         List<Character> openBrackets = new ArrayList<>();
         List<Character> closeBrackets = new ArrayList<>();
+
         for (int i = 0; i < str.length(); i++) {
             char c = str.charAt(i);
             if (c == '(')
@@ -139,7 +143,9 @@ public class MathTeacher {
                 }
             }
         }
+
         return (openBrackets.size() == closeBrackets.size());
+
     }
 
 }

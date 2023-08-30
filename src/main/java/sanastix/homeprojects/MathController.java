@@ -12,7 +12,6 @@ public class MathController {
         this.theView = theView;
         this.theModel = theModel;
 
-        //слухає, чи отримали ми рівняння та передає це відповідному класу
         this.theView.addSubmitEquationListener(new EquationListener());
     }
 
@@ -20,28 +19,27 @@ public class MathController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            //тут все виконується, коли ми отримали рівняння
-            //отримуємо введене рівняння від вью
+
             String equation = theView.getEquation();
+
             if (equation.isBlank()){
                 theView.displayResultMessage("Empty input");
             } else {
                 try {
 
-                    //передаємо моделі введене рівняння
                     theModel.setEquationInput(equation);
 
-                    //рівняння перевіряється та видає повідомлення
                     theView.displayResultMessage(theModel.equationChecker(equation));
 
-                    //рахується кількість чисел у введеному рівнянні та виводиться в текст.полі
                     theView.setNumCounter(theModel.getNumCount());
 
                 } catch (NumberFormatException ex) {
                     theView.displayErrorMessage();
                 }
             }
+
         }
+
     }
 
 }
