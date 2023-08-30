@@ -26,7 +26,6 @@ public class MathTeacher {
     private void saveEquationIntoFile (String equation){
         try(FileWriter fileWriter = new FileWriter(equationDB, true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
-
             bufferedWriter.write(equation);
             bufferedWriter.newLine();
         } catch (IOException e) {
@@ -36,8 +35,11 @@ public class MathTeacher {
 
     public String equationChecker(String eq){
         numCounter(eq);
-        if(!isInputCorrect(eq)||!areBracketsCorrect(eq)){
-            return "Incorrect input";
+        if(!isInputCorrect(eq)){
+            return "Incorrect equation input";
+        }
+        if(!areBracketsCorrect(eq)){
+            return "Incorrect brackets input";
         }
         saveEquationIntoFile(eq);
         return "The equation was saved";
@@ -60,9 +62,9 @@ public class MathTeacher {
         int count = 0;
         Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
         Matcher matcher = pattern.matcher(equation);
-        Queue<String> numbers = new LinkedList<>();
+        //Queue<String> numbers = new LinkedList<>();
         while(matcher.find()){
-            numbers.add(matcher.group());
+            //numbers.add(matcher.group());
             count++;
         }
         setNumsInEquation(count);
@@ -78,17 +80,16 @@ public class MathTeacher {
 
         if (wrongOpMatcher.find() && !rightOpMatcher.find()){
             return false;
-        }
-
-        //виокремлюємо з рівняння оператори
-        Queue<Character> operators = new LinkedList<>();
-        for (int i = 0; i < equation.length(); i++) {
-            char ch = equation.charAt(i);
-            if ((ch == '=') || (ch == '+') || (ch == '-') || (ch == '*') || (ch == '/')){
-                operators.add(ch);
-            }
-            if (ch == 'x'){
-                root = ch;
+        } else {
+            Queue<Character> operators = new LinkedList<>();
+            for (int i = 0; i < equation.length(); i++) {
+                char ch = equation.charAt(i);
+                if ((ch == '=') || (ch == '+') || (ch == '-') || (ch == '*') || (ch == '/')) {
+                    operators.add(ch);
+                }
+                if (ch == 'x') {
+                    root = ch;
+                }
             }
         }
         return true;
@@ -97,30 +98,32 @@ public class MathTeacher {
 
     private boolean areBracketsCorrect (String equation){
 
-        boolean result = true;
-        String[] strArr = equation.split("=");
-        for (String s : strArr) {
-            result = checkBracketsBalance(s);
+        boolean result = false;
+        Pattern pattern = Pattern.compile("\\(+|\\)+");
+        Matcher matcher = pattern.matcher(equation);
+        if (matcher.find()){
+            String[] strArr = equation.split("=");
+            for (String s : strArr) {
+                result = checkBracketsBalance(s);
+            }
+        } else {
+            result = true;
         }
         return result;
 
     }
 
     private boolean checkBracketsBalance(String str){
-        Deque<Character> brackets = new ArrayDeque<>();
+        Deque<Character> openBrackets = new ArrayDeque<>();
+        Deque<Character> closeBrackets = new ArrayDeque<>();
         for (int i = 0; i < str.length(); i++) {
             char c = str.charAt(i);
-            if (c == '(') {
-                brackets.push(c);
-            } else if (c == ')'){
-                if (!brackets.isEmpty()){
-                    brackets.pop();
-                } else {
-                    return false;
-                }
-            }
+            if (c == '(')
+                openBrackets.push(c);
+            if ((c == ')') && !openBrackets.isEmpty())
+                closeBrackets.push(c);
         }
-        return brackets.isEmpty();
+        return (openBrackets.size() == closeBrackets.size());
     }
 
 }

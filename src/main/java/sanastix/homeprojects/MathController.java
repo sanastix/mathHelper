@@ -21,23 +21,25 @@ public class MathController {
         @Override
         public void actionPerformed(ActionEvent e) {
             //тут все виконується, коли ми отримали рівняння
-            String equation;
+            //отримуємо введене рівняння від вью
+            String equation = theView.getEquation();
+            if (equation.isBlank()){
+                theView.displayResultMessage("Empty input");
+            } else {
+                try {
 
-            try{
-                //отримуємо введене рівняння від вью
-                equation = theView.getEquation();
-                //передаємо моделі введене рівняння
-                theModel.setEquationInput(equation);
+                    //передаємо моделі введене рівняння
+                    theModel.setEquationInput(equation);
 
-                //рівняння перевіряється та видає повідомлення
-                theView.displayResultMessage(theModel.equationChecker(equation));
+                    //рівняння перевіряється та видає повідомлення
+                    theView.displayResultMessage(theModel.equationChecker(equation));
 
-                //рахується кількість чисел у введеному рівнянні та виводиться в текст.полі
-                theView.setNumCounter(theModel.getNumCount());
+                    //рахується кількість чисел у введеному рівнянні та виводиться в текст.полі
+                    theView.setNumCounter(theModel.getNumCount());
 
-            }
-            catch (NumberFormatException ex){
-                theView.displayErrorMessage();
+                } catch (NumberFormatException ex) {
+                    theView.displayErrorMessage();
+                }
             }
         }
     }

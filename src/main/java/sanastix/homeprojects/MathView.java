@@ -40,12 +40,10 @@ public class MathView extends JFrame{
 
     }
 
-    //отримуємо введене рівняння
     public String getEquation(){
         return equation.getText();
     }
 
-    //слухаємо, чи отримали ми рівняння и робимо з ним щось
     void addSubmitEquationListener(ActionListener listenForSubmitEquationButton){
         submitEquationInputButton.addActionListener(listenForSubmitEquationButton);
     }
