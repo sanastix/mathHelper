@@ -86,6 +86,15 @@
       <workItem from="1693322118654" duration="144000" />
       <workItem from="1693322339248" duration="12459000" />
     </task>
+    <task id="LOCAL-00001" summary="bug with wrong operators input fixed">
+      <option name="closed" value="true" />
+      <created>1693413219719</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1693413219719</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -93,5 +102,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="bug with wrong operators input fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="bug with wrong operators input fixed" />
   </component>
 </project>

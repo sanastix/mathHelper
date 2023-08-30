@@ -105,30 +105,39 @@ public class MathTeacher {
 
     private boolean areBracketsCorrect (String equation){
 
-        boolean result = false;
+        String[] strArr = equation.split("=");
+        boolean leftStringResult = bracketsSeeker(strArr[0]);
+        boolean rightStringResult = bracketsSeeker(strArr[1]);
+        return (leftStringResult && rightStringResult);
+
+    }
+
+    private boolean bracketsSeeker (String string){
         Pattern pattern = Pattern.compile("\\(+|\\)+");
-        Matcher matcher = pattern.matcher(equation);
-        if (matcher.find()){
-            String[] strArr = equation.split("=");
-            for (String s : strArr) {
-                result = checkBracketsBalance(s);
-            }
+        Matcher matcher = pattern.matcher(string);
+        boolean result;
+        if (matcher.find()) {
+            result = checkBracketsBalance(string);
         } else {
             result = true;
         }
         return result;
-
     }
 
     private boolean checkBracketsBalance(String str){
-        Deque<Character> openBrackets = new ArrayDeque<>();
-        Deque<Character> closeBrackets = new ArrayDeque<>();
+        List<Character> openBrackets = new ArrayList<>();
+        List<Character> closeBrackets = new ArrayList<>();
         for (int i = 0; i < str.length(); i++) {
             char c = str.charAt(i);
             if (c == '(')
-                openBrackets.push(c);
-            if ((c == ')') && !openBrackets.isEmpty())
-                closeBrackets.push(c);
+                openBrackets.add(c);
+            if (c == ')') {
+                if (openBrackets.isEmpty()) {
+                    return false;
+                } else {
+                    closeBrackets.add(c);
+                }
+            }
         }
         return (openBrackets.size() == closeBrackets.size());
     }
