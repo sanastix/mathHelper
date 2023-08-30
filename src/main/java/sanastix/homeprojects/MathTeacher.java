@@ -1,10 +1,7 @@
 package sanastix.homeprojects;
 
 import java.io.*;
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -72,16 +69,27 @@ public class MathTeacher {
 
     private boolean isInputCorrect (String equation) {
 
-        //перевіряємо рівняння на коректність операторів
-        Pattern wrongOp = Pattern.compile("=?[-+=*/]{2,}");
+        List<String> opList = new ArrayList<>();
+        //патерн невалідних двох операторів зі списку поспіль
+        Pattern wrongOp = Pattern.compile("[-+=*/]{2,}");
         Matcher wrongOpMatcher = wrongOp.matcher(equation);
-        Pattern rightOp = Pattern.compile("=[-+=*/](-)");
-        Matcher rightOpMatcher = rightOp.matcher(equation);
+        //патерн валідних двох операторів поспіль
+        Pattern rightOp = Pattern.compile("[-+=*/]-");
+        Matcher rightOpMatcher;
 
-        if (wrongOpMatcher.find() && !rightOpMatcher.find()){
-            return false;
-        } else {
-            Queue<Character> operators = new LinkedList<>();
+        //записуємо співпадіння невалідних операторів у список
+        while (wrongOpMatcher.find()){
+            opList.add(wrongOpMatcher.group());
+        }
+
+        for (String s : opList){
+            rightOpMatcher = rightOp.matcher(s);
+            if ((s.length() > 2) || !rightOpMatcher.matches()){
+                return false;
+            }
+        }
+
+            /*Queue<Character> operators = new LinkedList<>();
             for (int i = 0; i < equation.length(); i++) {
                 char ch = equation.charAt(i);
                 if ((ch == '=') || (ch == '+') || (ch == '-') || (ch == '*') || (ch == '/')) {
@@ -90,8 +98,7 @@ public class MathTeacher {
                 if (ch == 'x') {
                     root = ch;
                 }
-            }
-        }
+            }*/
         return true;
 
     }

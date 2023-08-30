@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d145c8e-ba3c-41c8-8922-6c1070f809b3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/equationDB.txt" beforeDir="false" afterPath="$PROJECT_DIR$/equationDB.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sanastix/homeprojects/MathController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sanastix/homeprojects/MathController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/sanastix/homeprojects/MathTeacher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sanastix/homeprojects/MathTeacher.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
