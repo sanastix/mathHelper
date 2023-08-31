@@ -1,11 +1,24 @@
 package sanastix.homeprojects;
 
+import net.objecthunter.exp4j.Expression;
+import net.objecthunter.exp4j.ExpressionBuilder;
+
 import java.io.*;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MathTeacher {
+
+    private String root;
+
+    public String getRoot() {
+        return root;
+    }
+
+    public void setRootInput(String root) {
+        this.root = root;
+    }
 
     private String equationInput;
 
@@ -46,6 +59,16 @@ public class MathTeacher {
 
         saveEquationIntoFile(eq);
         return "The equation was saved";
+
+    }
+
+    public String rootChecker(String eq, String r){
+
+        if (evaluateEquationByGivenRoot(eq, r)){
+            return "The entered number is the root of the equation";
+        }
+
+        return "The entered number is not the root of the equation";
 
     }
 
@@ -145,6 +168,34 @@ public class MathTeacher {
         }
 
         return (openBrackets.size() == closeBrackets.size());
+
+    }
+
+    private boolean evaluateEquationByGivenRoot(String inputExpression, String inputRoot){
+
+        String [] strArr = inputExpression.split("=");
+
+        float difference = (float) Math.pow(10, -9);
+
+        Expression exp1 = new ExpressionBuilder(strArr[0])
+                .variables("x")
+                .build()
+                .setVariable("x", Double.parseDouble(inputRoot));
+
+        float leftResult = (float) exp1.evaluate();
+
+        Expression exp2 = new ExpressionBuilder(strArr[1])
+                .variables("x")
+                .build()
+                .setVariable("x", Double.parseDouble(inputRoot));
+
+        float rightResult = (float) exp2.evaluate();
+
+        float resultDifference = Math.abs(leftResult - rightResult);
+
+        //returns true, if given root evaluates equation and [abs]diff between
+        //left and right side of equation is less than Math.pow(10, -9)
+        return resultDifference < difference;
 
     }
 

@@ -13,6 +13,7 @@ public class MathController {
         this.theModel = theModel;
 
         this.theView.addSubmitEquationListener(new EquationListener());
+        this.theView.addSubmitRootListener(new RootListener());
     }
 
     class EquationListener implements ActionListener{
@@ -23,7 +24,7 @@ public class MathController {
             String equation = theView.getEquation();
 
             if (equation.isBlank()){
-                theView.displayResultMessage("Empty input");
+                theView.displayResultMessage("Empty equation input");
             } else {
                 try {
 
@@ -36,6 +37,35 @@ public class MathController {
                 } catch (NumberFormatException ex) {
                     theView.displayErrorMessage();
                 }
+            }
+
+        }
+
+    }
+
+    class RootListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            String equation = theView.getEquation();
+            String root = theView.getRoot();
+
+            if (root.isBlank()){
+                theView.displayResultMessage("Empty root input");
+            } else if (equation.isBlank()) {
+                theView.displayResultMessage("Empty equation input");
+            } else {
+                try {
+
+                    theModel.setRootInput(root);
+
+                    theView.displayResultMessage(theModel.rootChecker(equation, root));
+
+                } catch (NumberFormatException ex){
+                    theView.displayErrorMessage();
+                }
+
             }
 
         }
